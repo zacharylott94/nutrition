@@ -1,14 +1,16 @@
 (ns nutricalc.core
+  (:require [clojure.string :as str])
+
   (:gen-class))
-(require '[clojure.string :as string])
+
 
 
 (defn add 
   "Adds a csv line to the csv"
   [entry]
   (as-> entry x  
-      (string/join "," x)
-      (string/join "\n" [x ""])
+      (str/join "," x)
+      (str/join "\n" [x ""])
       (spit "test.csv" x :append true)
   )
   
@@ -16,26 +18,32 @@
 
 (defn compareFirst
   "Takes two lists, compares their first items"
-  [lst1 lst2]
-  (= (first lst1) (first lst2))
+  [[fst1 & _] [fst2 & _]] 
+  (= fst1 fst2)
 
 )
 
+(def info [:name :kcal :protein :fat :carbs])
+(def servingSize 100) ;100g
+
 (defn fetch
   "fetches the requested entry from the CSV file"
-  [args]
+  [[foodName amount]] ;parameter destructuring is wonderful
   (-> (slurp "test.csv")
-    (string/split #"\n") ;split file into lines
+    (str/split #"\n") ;split file into lines
     (as-> x 
-      (mapv (fn [x] (string/split x #",")) x)
-      (filterv (partial compareFirst args ) x)
-      (mapv println x) ;; throws out the vector just to print
-      )
-    
-  )
-  
-  
-  )
+      (map (fn [x] (str/split x #",")) x)
+      (filter (partial compareFirst [foodName] ) x)
+
+      (mapv (fn [[fst & rest]] (cons fst (->> (mapv (fn [x] (Float. x)) rest)
+                                    (mapv (-> (Float. amount)
+                                              (/ servingSize)
+                                              (->> (partial *))) )))) x)
+      
+      )  
+  ) 
+)
+
 
 
   
@@ -47,7 +55,9 @@
   [& args]
   (cond 
     (= (first args) "add") (add (rest args))
-    :else (fetch args)
+    :else (->> (fetch args)
+               (mapv println) ;; throws out the vector just to print
+          )
   )
 )
 
