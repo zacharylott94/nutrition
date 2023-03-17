@@ -48,16 +48,24 @@
 
   
   
+(defn help
+  []
+  (println "To recall a food, use `nut foodName grams`
+To add a food, use `nut add foodName kcal protein fat carbs`")
+  )
 
 
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
+
   (cond 
+    (< (count args) 2) (help)
     (= (first args) "add") (add (rest args))
     :else (->> (fetch args)
                (mapv println) ;; throws out the vector just to print
-          )
-  )
+               )
+    )
 )
+
 
