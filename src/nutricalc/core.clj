@@ -75,6 +75,10 @@ To pretty print, use `nut pretty foodName amount`"))
 (defn linePrint
   [[name kcal protein fat carbs]]
   (printf "%s - kcal: %.1f, p: %.1f, f: %.1f, c: %.1f\n" name kcal protein fat carbs))
+
+(defn csvPrint
+  [[name kcal protein fat carbs]]
+  (printf "%s,%.1f,%.1f,%.1f,%.1f\n" name kcal protein fat carbs))
   
 
 (defn prettyPrint
@@ -98,7 +102,7 @@ To pretty print, use `nut pretty foodName amount`"))
     (< (count args) 2) (help)
     (= (first args) "pretty") (serve prettyPrint (rest args))
     (= (first args) "add") (add (rest args))
-    :else (serve linePrint args))
+    :else (serve csvPrint args))
   (flush)
   )
     
