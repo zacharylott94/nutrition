@@ -54,6 +54,22 @@
 To add a food, use `nut add foodName kcal protein fat carbs`")
   )
 
+(defn linePrint
+  [[name kcal protein fat carbs]]
+  (printf "%s - kcal: %.1f, p: %.1f, f: %.1f, c: %.1f\n" name kcal protein fat carbs)
+  )
+
+(defn prettyPrint
+  [[name kcal protein fat carbs]]
+  (printf "%s\n--------------\nkcal:    %.1f\nProtein: %.1f\nFat:     %.1f\nCarbs:   %.1f\n" name kcal protein fat carbs))
+
+(defn serve
+  [printMethod args]
+  (->> (fetch args)
+       (mapv printMethod) ;; throws out the vector just to print
+       )
+  )
+
 
 (defn -main
   "I don't do a whole lot ... yet."
@@ -61,10 +77,9 @@ To add a food, use `nut add foodName kcal protein fat carbs`")
 
   (cond 
     (< (count args) 2) (help)
+    (= (first args) "pretty") (serve prettyPrint (rest args))
     (= (first args) "add") (add (rest args))
-    :else (->> (fetch args)
-               (mapv println) ;; throws out the vector just to print
-               )
+    :else (serve linePrint args)
     )
 )
 
