@@ -1,4 +1,4 @@
-# Nutricalc
+# Nut
 
 A CSV-driven, locally hosted, nutrition repository and macronutrient calculator for the terminal.
 
