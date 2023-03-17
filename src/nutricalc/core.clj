@@ -67,8 +67,9 @@
   
 (defn help
   []
-  (println "To recall a food, use `nut foodName grams`
-To add a food, use `nut add foodName kcal protein fat carbs`"))
+  (println "To recall a food, use `nut foodName amount`
+To add a food, use `nut add foodName kcal protein fat carbs`
+To pretty print, use `nut pretty foodName amount`"))
   
 
 (defn linePrint
@@ -97,7 +98,9 @@ To add a food, use `nut add foodName kcal protein fat carbs`"))
     (< (count args) 2) (help)
     (= (first args) "pretty") (serve prettyPrint (rest args))
     (= (first args) "add") (add (rest args))
-    :else (serve linePrint args)))
+    :else (serve linePrint args))
+  (flush)
+  )
     
 
 

@@ -4,13 +4,24 @@ A CSV-driven, locally hosted, nutrition repository and macronutrient calculator 
 
 ## Scope
 
-This software is intended for people who only need to keep track of a handful of food items, portion their food by weight (grams specifically), only care about macronutrients and calorie counts, and don't want to be bogged down by menus.
+This software is intended for people who only need to keep track of a handful of food items, portion their food by some universal standard portion (for me it's 100 grams), only care about macronutrients and calorie counts, and don't want to be bogged down by menus.
+
+## build
+
+`lein uberjar` to build
+
+`lein run <params>` to test
 
 ## use
 
-`nut <food> <grams>` -> `<kcal> <protein> <fat> <carbs>`
+set an environment variable `NUT` to point to a path to store the csv and config files
+set up a blank csv file and make a config file with the line `standard-portion val` where val is your standard portion
 
-`nut add <name> <kcal> <protein> <fat> <carbs>` -> `added to CSV`
+`nut <food> <grams>` -> All values in-line
+
+`nut pretty <food> <serving>` -> A prettier print
+
+`nut add <name> <kcal> <protein> <fat> <carbs>` -> entry added to csv
 
 ## Design Choices
 
