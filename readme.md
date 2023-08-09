@@ -8,6 +8,11 @@ This software is intended for people who only need to keep track of a handful of
 
 ## build
 
+You'll need to install `leiningen`
+
+`sudo apt install leiningen`
+
+
 `lein uberjar` to build
 
 `lein run <params>` to test

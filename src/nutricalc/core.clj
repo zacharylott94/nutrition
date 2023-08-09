@@ -69,7 +69,8 @@
   []
   (println "To recall a food, use `nut foodName amount`
 To add a food, use `nut add foodName kcal protein fat carbs`
-To pretty print, use `nut pretty foodName amount`"))
+To pretty print, use `nut pretty foodName amount`
+To list the stash, use `nut list`"))
   
 
 (defn linePrint
@@ -99,6 +100,7 @@ To pretty print, use `nut pretty foodName amount`"))
   (grabConfig)
 
   (cond 
+    (= (first args) "list") (printf (slurp (str path "stash")))
     (< (count args) 2) (help)
     (= (first args) "pretty") (serve prettyPrint (rest args))
     (= (first args) "add") (add (rest args))
